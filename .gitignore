@@ -1,0 +1,33 @@
+# Flutter related
+build/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+coverage/
+analysis_benchmark.json
+
+# VS Code related
+.vscode/*
+!launch.json  # You might want to keep your launch config
+!settings.json  # You might want to keep your VS Code settings
+
+# IDE related (general)
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# General
+*.class
+*.lock
+*.log
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.buildlog/
+.history
+.svn/
+migrate_working_dir/
