@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:pct_mark/core/common/resources/font_manager.dart';
 
 class PctTextStyle {
-  TextStyle splashHeadingStyle = const TextStyle(
+  static const TextStyle splashHeadingStyle = TextStyle(
     fontFamily: "Poppins",
     fontSize: 18,
-    fontWeight: FontWeight.w600,
+    fontWeight: PctFontWeight.semibold,
     color: Color(0xff000000),
     height: 24.970624923706055 / 18,
   );

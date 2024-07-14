@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 class PctStrings {
   // String constants for login screen
   static const String LoginScreenTitle1 = "Property Care Taker";

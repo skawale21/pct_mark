@@ -26,7 +26,8 @@ class AppTheme {
     listTileTheme: const ListTileThemeData(horizontalTitleGap: 2),
     tabBarTheme: const TabBarTheme(
       labelColor: PctColors.mainColor, // Color of selected tab name
-      unselectedLabelColor: Colors.grey, // Color of unselected tab names
+      unselectedLabelColor:
+          PctColors.greyColor, // Color of unselected tab names
       indicator: BoxDecoration(
         border: Border(
           bottom: BorderSide(

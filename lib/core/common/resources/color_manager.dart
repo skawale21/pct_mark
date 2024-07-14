@@ -8,6 +8,8 @@ class PctColors {
   static const transparantColor = Colors.transparent;
   static const blackColor = Colors.black;
   static Color primary = HexColor.fromHex("#ED9728");
+
+  static const Color signInTextColorBelowMan = Color(0xFF125D50);
   // static Color darkGrey = HexColor.fromHex("#525252");
   // static Color grey = HexColor.fromHex("#737477");
   // static Color lightGrey = HexColor.fromHex("#9E9E9E");
