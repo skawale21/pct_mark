@@ -10,6 +10,8 @@ class PctColors {
   static Color primary = HexColor.fromHex("#ED9728");
 
   static const Color signInTextColorBelowMan = Color(0xFF125D50);
+
+  static const Color rememberMeTextColor = Color(0xFF27374D);
   // static Color darkGrey = HexColor.fromHex("#525252");
   // static Color grey = HexColor.fromHex("#737477");
   // static Color lightGrey = HexColor.fromHex("#9E9E9E");

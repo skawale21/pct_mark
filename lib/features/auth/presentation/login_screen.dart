@@ -1,11 +1,15 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:pct_mark/core/common/common_functions/form_validations.dart';
 import 'package:pct_mark/core/common/resources/asset_manager.dart';
+import 'package:pct_mark/core/common/resources/color_manager.dart';
 import 'package:pct_mark/core/common/resources/string_manager.dart';
 import 'package:pct_mark/core/common/resources/theme_manager.dart';
 import 'package:pct_mark/core/common/resources/values_manager.dart';
 import 'package:pct_mark/core/common/widgets/app_logo_widget.dart';
 import 'package:pct_mark/core/common/widgets/auth_form_field_widget.dart';
 import 'package:pct_mark/core/common/widgets/background_scaffold_widget.dart';
+import 'package:pct_mark/core/common/widgets/custom_elevated_button_widget.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -38,9 +42,10 @@ class _LoginScreenState extends State<LoginScreen>
         // Center the entire content within BackgroundScaffold
         child: SingleChildScrollView(
           // Allow content to scroll if needed
-          child: Padding(
+          child: Container(
+            margin: const EdgeInsets.symmetric(horizontal: PctMargin.m16),
             // Add padding for visual balance (optional)
-            padding: const EdgeInsets.symmetric(horizontal: PctPadding.p18),
+
             child: Column(
               mainAxisAlignment:
                   MainAxisAlignment.center, // Center column vertically
@@ -50,11 +55,13 @@ class _LoginScreenState extends State<LoginScreen>
                 appLogoTitle, // Assuming appLogoTitle is a centered widget
                 // Add other login screen elements here, centered within the column
                 Card(
+                  color: PctColors.whiteColor,
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(PctAppSize.s20)),
+                      borderRadius: BorderRadius.circular(PctAppSize.s10)),
                   margin: const EdgeInsets.symmetric(
-                      horizontal: PctAppSize.s20, vertical: 00),
+                      horizontal: PctMargin.m10, vertical: 00),
                   child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Column(
                       children: [
                         TabBar(controller: _loginTabController, tabs: const [
@@ -81,7 +88,7 @@ class _LoginScreenState extends State<LoginScreen>
                         ),
                         SizedBox(
                           width: double.maxFinite,
-                          height: 250,
+                          height: 350,
                           child: TabBarView(
                               controller: _loginTabController,
                               children: const [
@@ -112,29 +119,96 @@ class BrokerLoginTab extends StatefulWidget {
 class _BrokerLoginTabState extends State<BrokerLoginTab> {
   final TextEditingController _brokerUserName = TextEditingController();
   final TextEditingController _brokerPassword = TextEditingController();
-  final _brokerSignupFormfield = GlobalKey<FormState>();
+  bool? rememberMe = false;
+  final _brokerLoginFormfield = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(PctAppSize.s20),
+      padding: const EdgeInsets.all(PctAppSize.s10),
       child: Column(
         children: [
           Form(
-              key: _brokerSignupFormfield,
-              child: Column(
-                children: [
-                  AuthField(
-                    hintText: 'Mobile No/Email Id',
-                    controller: _brokerUserName,
-                  ),
-                  AuthField(
-                    hintText: 'Password',
-                    controller: _brokerPassword,
-                    isObsecure: false,
-                  ),
-                ],
-              )),
+            key: _brokerLoginFormfield,
+            child: Column(
+              children: [
+                AuthField(
+                  hintText: 'Username (Email/Mob No)',
+                  controller: _brokerUserName,
+                  validator: (value) => validateEmailOrPhone(value, 'Username'),
+                ),
+                AuthField(
+                  hintText: 'Password',
+                  controller: _brokerPassword,
+                  isObscure: true,
+                  showToggle: true,
+                  validator: (value) => validatePassword(value, 'Password'),
+                ),
+              ],
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Row(children: [
+                Checkbox(
+                  value: rememberMe,
+                  onChanged: (newValue) {
+                    setState(() {
+                      rememberMe = newValue!;
+                    });
+                  },
+                ),
+                const Text(
+                  PctStrings.LoginScreenRememberMeTitle,
+                  style: PctTextStyles.remMeFogotPsw,
+                ),
+              ]),
+              InkWell(
+                onTap: () {
+                  // Your tap handling logic here
+                },
+                child: const Text(
+                  PctStrings.LoginScreenForgetPasswordTitle,
+                  style: PctTextStyles.remMeFogotPsw,
+                ),
+              )
+            ],
+          ),
+          CustomElevatedButton(
+            onPressed: () {
+              if (_brokerLoginFormfield.currentState!.validate()) {
+                // Handle login logic
+                if (kDebugMode) {
+                  print('Form is valid');
+                }
+              }
+            },
+            text: 'LOG IN',
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              const Text(
+                PctStrings.LoginScreenNoAccountTitle,
+                style: PctTextStyles.loginScreenNoAccountTitleStyle,
+              ),
+              InkWell(
+                onTap: () {
+                  // loginBloc.add(LoginScreenSignupClickEvent());
+                  // context.pushNamed(AppRoutes.signupRoute);
+                },
+                child: const Text(
+                  PctStrings.LoginScreenSingnUpTitle,
+                  style: PctTextStyles.remMeFogotPsw,
+                ),
+              )
+            ],
+          )
         ],
       ),
     );
@@ -149,15 +223,79 @@ class TenantLoginTab extends StatefulWidget {
 }
 
 class _TenantLoginTabState extends State<TenantLoginTab> {
+  final TextEditingController _tenantUserName = TextEditingController();
+  final TextEditingController _tenantPassword = TextEditingController();
+  bool? rememberMe = false;
+  final _tenantLoginFormfield = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Form(
+    return Padding(
+      padding: const EdgeInsets.all(PctAppSize.s10),
+      child: Column(
+        children: [
+          Form(
+            key: _tenantLoginFormfield,
             child: Column(
-          children: [TextFormField()],
-        )),
-      ],
+              children: [
+                AuthField(
+                  hintText: 'Username (Email/Mob No)',
+                  controller: _tenantUserName,
+                  validator: (value) => validateEmailOrPhone(value, 'Username'),
+                ),
+                AuthField(
+                  hintText: 'Password',
+                  controller: _tenantPassword,
+                  isObscure: true,
+                  showToggle: true,
+                  validator: (value) => validatePassword(value, 'Password'),
+                ),
+              ],
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Row(children: [
+                Checkbox(
+                  value: rememberMe,
+                  onChanged: (newValue) {
+                    setState(() {
+                      rememberMe = newValue!;
+                    });
+                  },
+                ),
+                const Text(
+                  PctStrings.LoginScreenRememberMeTitle,
+                  style: PctTextStyles.remMeFogotPsw,
+                ),
+              ]),
+              InkWell(
+                onTap: () {
+                  // Your tap handling logic here
+                },
+                child: const Text(
+                  PctStrings.LoginScreenForgetPasswordTitle,
+                  style: PctTextStyles.remMeFogotPsw,
+                ),
+              )
+            ],
+          ),
+          const SizedBox(
+            height: 30,
+          ),
+          CustomElevatedButton(
+            onPressed: () {
+              if (_tenantLoginFormfield.currentState!.validate()) {
+                // Handle login logic
+                if (kDebugMode) {
+                  print('Form is valid');
+                }
+              }
+            },
+            text: 'LOG IN',
+          )
+        ],
+      ),
     );
   }
 }

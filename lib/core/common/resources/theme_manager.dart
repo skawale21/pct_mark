@@ -3,11 +3,26 @@ import 'package:pct_mark/core/common/resources/color_manager.dart';
 import 'package:pct_mark/core/common/resources/font_manager.dart';
 
 class PctTextStyles {
+  // login screen styles
   static const TextStyle sigiInTextStyle = TextStyle(
     color: PctColors.signInTextColorBelowMan,
     fontSize: PctFontSize.s18,
     fontFamily: PctFontFamily.Montserrat,
     fontWeight: PctFontWeight.semibold,
+  );
+
+  static const TextStyle remMeFogotPsw = TextStyle(
+    color: PctColors.rememberMeTextColor,
+    fontSize: PctFontSize.s12,
+    fontFamily: PctFontFamily.Poppins,
+    fontWeight: PctFontWeight.medium,
+  );
+
+  static const TextStyle loginScreenNoAccountTitleStyle = TextStyle(
+    color: PctColors.signInTextColorBelowMan,
+    fontSize: PctFontSize.s12,
+    fontFamily: PctFontFamily.Poppins,
+    fontWeight: PctFontWeight.regular,
   );
 }
 
