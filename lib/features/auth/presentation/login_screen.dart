@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pct_mark/core/common/common_functions/form_validations.dart';
 import 'package:pct_mark/core/common/resources/asset_manager.dart';
 import 'package:pct_mark/core/common/resources/color_manager.dart';
@@ -10,6 +11,9 @@ import 'package:pct_mark/core/common/widgets/app_logo_widget.dart';
 import 'package:pct_mark/core/common/widgets/auth_form_field_widget.dart';
 import 'package:pct_mark/core/common/widgets/background_scaffold_widget.dart';
 import 'package:pct_mark/core/common/widgets/custom_elevated_button_widget.dart';
+import 'package:pct_mark/core/common/widgets/custom_snackbar.dart';
+import 'package:pct_mark/core/common/widgets/loading_widget.dart';
+import 'package:pct_mark/features/auth/presentation/bloc/login_bloc.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -21,6 +25,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen>
     with SingleTickerProviderStateMixin {
   late TabController _loginTabController;
+  // final LoginBloc _loginBloc = LoginBloc();
 
   @override
   void initState() {
@@ -37,73 +42,115 @@ class _LoginScreenState extends State<LoginScreen>
 
   @override
   Widget build(BuildContext context) {
+    LoginBloc loginBloc = context.read<LoginBloc>();
     return BackgroundScaffold(
-      body: Center(
-        // Center the entire content within BackgroundScaffold
-        child: SingleChildScrollView(
-          // Allow content to scroll if needed
-          child: Container(
-            margin: const EdgeInsets.symmetric(horizontal: PctMargin.m16),
-            // Add padding for visual balance (optional)
+      body: BlocConsumer<LoginBloc, LoginState>(
+        bloc: loginBloc,
+        listenWhen: (previous, current) => current is LoginActionState,
+        buildWhen: (previous, current) => current is! LoginActionState,
+        listener: (context, state) {
+          switch (state.runtimeType) {
+            case const (BrokerLoginSuccessActionState):
+              showCustomSnackbar(context, 'BrokerLoginSuccessActionState');
+              break;
+            case const (TenantLoginSuccessActionState):
+              showCustomSnackbar(context, 'TenantLoginSuccessActionState');
 
-            child: Column(
-              mainAxisAlignment:
-                  MainAxisAlignment.center, // Center column vertically
-              crossAxisAlignment:
-                  CrossAxisAlignment.center, // Center column horizontally
-              children: [
-                appLogoTitle, // Assuming appLogoTitle is a centered widget
-                // Add other login screen elements here, centered within the column
-                Card(
-                  color: PctColors.whiteColor,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(PctAppSize.s10)),
-                  margin: const EdgeInsets.symmetric(
-                      horizontal: PctMargin.m10, vertical: 00),
+              break;
+            case const (BrokerSignupActionState):
+              showCustomSnackbar(context, 'BrokerSignupActionState');
+
+              break;
+            case const (BrokerForgotPswActionState):
+              showCustomSnackbar(context, 'BrokerForgotPswActionState');
+
+              break;
+            case const (TenantForgotPswActionState):
+              showCustomSnackbar(context, 'TenantForgotPswActionState');
+
+              break;
+            default:
+              showCustomSnackbar(context, 'BrokerLoginDefaultActionState');
+          }
+        },
+        builder: (context, state) {
+          switch (state.runtimeType) {
+            case const (LoginLoadingState):
+              return const LoadingWidget();
+            default:
+              return Center(
+                // Center the entire content within BackgroundScaffold
+                child: SingleChildScrollView(
+                  // Allow content to scroll if needed
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    margin:
+                        const EdgeInsets.symmetric(horizontal: PctMargin.m16),
+                    // Add padding for visual balance (optional)
+
                     child: Column(
+                      mainAxisAlignment:
+                          MainAxisAlignment.center, // Center column vertically
+                      crossAxisAlignment: CrossAxisAlignment
+                          .center, // Center column horizontally
                       children: [
-                        TabBar(controller: _loginTabController, tabs: const [
-                          Tab(
-                            child: Text(
-                              PctStrings.LoginScreenBrokerTitle,
+                        appLogoTitle, // Assuming appLogoTitle is a centered widget
+                        // Add other login screen elements here, centered within the column
+                        Card(
+                          color: PctColors.whiteColor,
+                          shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(PctAppSize.s10)),
+                          margin: const EdgeInsets.symmetric(
+                              horizontal: PctMargin.m10, vertical: 00),
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: Column(
+                              children: [
+                                TabBar(
+                                    controller: _loginTabController,
+                                    tabs: const [
+                                      Tab(
+                                        child: Text(
+                                          PctStrings.LoginScreenBrokerTitle,
+                                        ),
+                                      ),
+                                      Tab(
+                                        child: Text(
+                                          PctStrings.LoginScreenTenantTitle,
+                                        ),
+                                      )
+                                    ]),
+                                const Image(
+                                  height: 150,
+                                  image: AssetImage(
+                                    PctImages.mansitting,
+                                  ),
+                                ),
+                                const Text(
+                                  PctStrings.SignIn,
+                                  style: PctTextStyles.sigiInTextStyle,
+                                ),
+                                SizedBox(
+                                  width: double.maxFinite,
+                                  height: 350,
+                                  child: TabBarView(
+                                      controller: _loginTabController,
+                                      children: const [
+                                        BrokerLoginTab(),
+                                        TenantLoginTab()
+                                      ]),
+                                ),
+                              ],
                             ),
                           ),
-                          Tab(
-                            child: Text(
-                              PctStrings.LoginScreenTenantTitle,
-                            ),
-                          )
-                        ]),
-                        const Image(
-                          height: 150,
-                          image: AssetImage(
-                            PctImages.mansitting,
-                          ),
-                        ),
-                        const Text(
-                          PctStrings.SignIn,
-                          style: PctTextStyles.sigiInTextStyle,
-                        ),
-                        SizedBox(
-                          width: double.maxFinite,
-                          height: 350,
-                          child: TabBarView(
-                              controller: _loginTabController,
-                              children: const [
-                                BrokerLoginTab(),
-                                TenantLoginTab()
-                              ]),
-                        ),
+                        )
                       ],
                     ),
                   ),
-                )
-              ],
-            ),
-          ),
-        ),
+                ),
+              );
+          }
+        },
       ),
     );
   }
@@ -124,6 +171,7 @@ class _BrokerLoginTabState extends State<BrokerLoginTab> {
 
   @override
   Widget build(BuildContext context) {
+    final loginBloc = context.read<LoginBloc>();
     return Padding(
       padding: const EdgeInsets.all(PctAppSize.s10),
       child: Column(
@@ -166,7 +214,7 @@ class _BrokerLoginTabState extends State<BrokerLoginTab> {
               ]),
               InkWell(
                 onTap: () {
-                  // Your tap handling logic here
+                  loginBloc.add(BrokerForgetPswEvent());
                 },
                 child: const Text(
                   PctStrings.LoginScreenForgetPasswordTitle,
@@ -178,7 +226,7 @@ class _BrokerLoginTabState extends State<BrokerLoginTab> {
           CustomElevatedButton(
             onPressed: () {
               if (_brokerLoginFormfield.currentState!.validate()) {
-                // Handle login logic
+                loginBloc.add(BrokerLoginEvent());
                 if (kDebugMode) {
                   print('Form is valid');
                 }
@@ -199,7 +247,7 @@ class _BrokerLoginTabState extends State<BrokerLoginTab> {
               ),
               InkWell(
                 onTap: () {
-                  // loginBloc.add(LoginScreenSignupClickEvent());
+                  loginBloc.add(BrokerSignUpDirectEvent());
                   // context.pushNamed(AppRoutes.signupRoute);
                 },
                 child: const Text(
@@ -229,6 +277,7 @@ class _TenantLoginTabState extends State<TenantLoginTab> {
   final _tenantLoginFormfield = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+    final loginBloc = context.read<LoginBloc>();
     return Padding(
       padding: const EdgeInsets.all(PctAppSize.s10),
       child: Column(
@@ -271,7 +320,7 @@ class _TenantLoginTabState extends State<TenantLoginTab> {
               ]),
               InkWell(
                 onTap: () {
-                  // Your tap handling logic here
+                  loginBloc.add(TenantForgetPswEvent());
                 },
                 child: const Text(
                   PctStrings.LoginScreenForgetPasswordTitle,
@@ -286,7 +335,7 @@ class _TenantLoginTabState extends State<TenantLoginTab> {
           CustomElevatedButton(
             onPressed: () {
               if (_tenantLoginFormfield.currentState!.validate()) {
-                // Handle login logic
+                loginBloc.add(TenantLoginEvent());
                 if (kDebugMode) {
                   print('Form is valid');
                 }
