@@ -170,6 +170,13 @@ class _BrokerLoginTabState extends State<BrokerLoginTab> {
   final _brokerLoginFormfield = GlobalKey<FormState>();
 
   @override
+  void dispose() {
+    _brokerUserName.dispose();
+    _brokerPassword.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final loginBloc = context.read<LoginBloc>();
     return Padding(
@@ -275,6 +282,14 @@ class _TenantLoginTabState extends State<TenantLoginTab> {
   final TextEditingController _tenantPassword = TextEditingController();
   bool? rememberMe = false;
   final _tenantLoginFormfield = GlobalKey<FormState>();
+
+  @override
+  void dispose() {
+    _tenantUserName.dispose();
+    _tenantPassword.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final loginBloc = context.read<LoginBloc>();
