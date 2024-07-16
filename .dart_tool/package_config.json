@@ -98,6 +98,12 @@
       "languageVersion": "3.0"
     },
     {
+      "name": "get_it",
+      "rootUri": "file:///home/santosh/.pub-cache/hosted/pub.dev/get_it-7.7.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
       "name": "go_router",
       "rootUri": "file:///home/santosh/.pub-cache/hosted/pub.dev/go_router-14.2.1",
       "packageUri": "lib/",
@@ -290,7 +296,7 @@
       "languageVersion": "3.4"
     }
   ],
-  "generated": "2024-07-15T18:03:23.492978Z",
+  "generated": "2024-07-16T12:28:50.994827Z",
   "generator": "pub",
   "generatorVersion": "3.4.3",
   "flutterRoot": "file:///home/santosh/snap/flutter/common/flutter",
