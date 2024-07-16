@@ -4,30 +4,30 @@ import 'package:pct_mark/core/common/resources/api_endpoints.dart';
 import 'package:pct_mark/core/common/services/http_service.dart';
 import 'package:pct_mark/core/error/exceptions.dart';
 
-abstract interface class AuthRemoteRemoteDataSource {
+abstract interface class AuthRemoteDataSource {
   Future<String> brokerLogin({
-    required String username,
+    required String userName,
     required String password,
   });
 
   Future<String> tenantLogin({
-    required String username,
+    required String userName,
     required String password,
   });
 }
 
-class AuthRemoteRemoteDataSourceImpl implements AuthRemoteRemoteDataSource {
+class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   final HttpService httpService;
-  AuthRemoteRemoteDataSourceImpl(
+  AuthRemoteDataSourceImpl(
     this.httpService,
   );
   final client = http.Client();
   @override
   Future<String> brokerLogin(
-      {required String username, required String password}) async {
+      {required String userName, required String password}) async {
     try {
       final response = await httpService.post(ApiEndPoints.brokerLogin,
-          data: {'userName': username, 'password': password});
+          data: {'userName': userName, 'password': password});
       if (response == null) {
         throw ServerException('User is null');
       }
@@ -39,10 +39,10 @@ class AuthRemoteRemoteDataSourceImpl implements AuthRemoteRemoteDataSource {
 
   @override
   Future<String> tenantLogin(
-      {required String username, required String password}) async {
+      {required String userName, required String password}) async {
     try {
       final response = await httpService.post(ApiEndPoints.tenentLogin,
-          data: {'userName': username, 'password': password});
+          data: {'userName': userName, 'password': password});
       if (response == null) {
         throw ServerException('User is null');
       }
