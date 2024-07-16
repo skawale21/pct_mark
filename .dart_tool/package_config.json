@@ -86,10 +86,22 @@
       "languageVersion": "3.3"
     },
     {
+      "name": "flutter_web_plugins",
+      "rootUri": "file:///home/santosh/snap/flutter/common/flutter/packages/flutter_web_plugins",
+      "packageUri": "lib/",
+      "languageVersion": "3.2"
+    },
+    {
       "name": "fpdart",
       "rootUri": "file:///home/santosh/.pub-cache/hosted/pub.dev/fpdart-1.1.0",
       "packageUri": "lib/",
       "languageVersion": "3.0"
+    },
+    {
+      "name": "go_router",
+      "rootUri": "file:///home/santosh/.pub-cache/hosted/pub.dev/go_router-14.2.1",
+      "packageUri": "lib/",
+      "languageVersion": "3.2"
     },
     {
       "name": "http",
@@ -126,6 +138,12 @@
       "rootUri": "file:///home/santosh/.pub-cache/hosted/pub.dev/lints-3.0.0",
       "packageUri": "lib/",
       "languageVersion": "3.0"
+    },
+    {
+      "name": "logging",
+      "rootUri": "file:///home/santosh/.pub-cache/hosted/pub.dev/logging-1.2.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.19"
     },
     {
       "name": "matcher",
@@ -272,7 +290,7 @@
       "languageVersion": "3.4"
     }
   ],
-  "generated": "2024-07-15T04:56:20.088233Z",
+  "generated": "2024-07-15T18:03:23.492978Z",
   "generator": "pub",
   "generatorVersion": "3.4.3",
   "flutterRoot": "file:///home/santosh/snap/flutter/common/flutter",

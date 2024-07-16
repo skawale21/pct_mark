@@ -6,6 +6,7 @@ import 'package:pct_mark/features/auth/presentation/login_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+
   runApp(MultiBlocProvider(providers: [
     BlocProvider(
       create: (_) => LoginBloc(),
