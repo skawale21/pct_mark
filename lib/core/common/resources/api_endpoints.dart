@@ -1,7 +1,7 @@
 import 'dart:core';
 
 class ApiEndPoints {
-  static const baseUrl = "3.6.94.37:3000";
+  static const baseUrl = "http://3.6.94.37:3000";
 
   static const brokerSignUp = "/api/broker/register";
   static const brokerLogin = "/api/broker/login";

@@ -2,12 +2,20 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pct_mark/features/auth/domain/repository/usecase/broker_login.dart';
+import 'package:pct_mark/features/auth/domain/repository/usecase/tenant_login.dart';
 
 part 'login_event.dart';
 part 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
-  LoginBloc() : super(LoginInitial()) {
+  final BrokerLogin _brokerLogin;
+  final TenantLogin _tenantLogin;
+  LoginBloc(
+      {required BrokerLogin brokerLogin, required TenantLogin tenantLogin})
+      : _brokerLogin = brokerLogin,
+        _tenantLogin = tenantLogin,
+        super(LoginInitial()) {
     on<LoginEvent>(loginEvent);
     on<BrokerLoginEvent>(brokerLoginEvent);
     on<BrokerSignUpDirectEvent>(brokerSignUpDirectEvent);
@@ -21,8 +29,19 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   }
 
   FutureOr<void> brokerLoginEvent(
-      BrokerLoginEvent event, Emitter<LoginState> emit) {
-    emit(BrokerLoginSuccessActionState());
+      BrokerLoginEvent event, Emitter<LoginState> emit) async {
+    final user = await _brokerLogin(
+        BrokerLoginParams(userName: event.userName, password: event.password));
+
+    user.fold(
+      (l) {
+        debugPrint(l.message);
+        emit(BrokerLoginFailureState(message: l.message));
+      },
+      (r) {
+        emit(BrokerLoginSuccessActionState());
+      },
+    );
   }
 
   FutureOr<void> brokerSignUpDirectEvent(

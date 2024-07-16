@@ -233,10 +233,10 @@ class _BrokerLoginTabState extends State<BrokerLoginTab> {
           CustomElevatedButton(
             onPressed: () {
               if (_brokerLoginFormfield.currentState!.validate()) {
-                loginBloc.add(BrokerLoginEvent());
-                if (kDebugMode) {
-                  print('Form is valid');
-                }
+                loginBloc.add(BrokerLoginEvent(
+                  password: _brokerPassword.text.trim(),
+                  userName: _brokerUserName.text.trim(),
+                ));
               }
             },
             text: 'LOG IN',
@@ -350,7 +350,10 @@ class _TenantLoginTabState extends State<TenantLoginTab> {
           CustomElevatedButton(
             onPressed: () {
               if (_tenantLoginFormfield.currentState!.validate()) {
-                loginBloc.add(TenantLoginEvent());
+                loginBloc.add(TenantLoginEvent(
+                  password: _tenantPassword.text.trim(),
+                  userName: _tenantUserName.text.trim(),
+                ));
                 if (kDebugMode) {
                   print('Form is valid');
                 }

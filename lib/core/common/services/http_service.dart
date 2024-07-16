@@ -30,7 +30,7 @@ class HttpService {
 
   Future<dynamic> post(String endpoint, {required dynamic data}) async {
     var response = await http.post(
-      Uri.parse('$baseUrl/$endpoint'),
+      Uri.parse('$baseUrl$endpoint'),
       body: jsonEncode(data),
       headers: _getHeaders(),
     );

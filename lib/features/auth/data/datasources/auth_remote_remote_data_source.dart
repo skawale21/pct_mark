@@ -31,7 +31,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       if (response == null) {
         throw ServerException('User is null');
       }
-      return response; //use .fromJson form model class
+      return response.toString(); //use .fromJson form model class
     } catch (e) {
       throw ServerException(e.toString());
     }
