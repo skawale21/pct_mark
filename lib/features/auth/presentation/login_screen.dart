@@ -69,6 +69,10 @@ class _LoginScreenState extends State<LoginScreen>
               showCustomSnackbar(context, 'TenantForgotPswActionState');
 
               break;
+            case const (BrokerLoginFailureState):
+              showCustomSnackbar(context, 'BrokerLoginFailureState');
+
+              break;
             default:
               showCustomSnackbar(context, 'BrokerLoginDefaultActionState');
           }

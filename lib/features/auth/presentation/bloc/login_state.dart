@@ -7,18 +7,22 @@ final class LoginInitial extends LoginState {}
 
 final class LoginLoadingState extends LoginState {}
 
-final class BrokerLoginFailureState extends LoginState {
-  final String message;
-
-  BrokerLoginFailureState({required this.message});
-}
-
 final class TenantLoginFailureState extends LoginState {}
 
 // action states
 final class LoginActionState extends LoginState {}
 
-final class BrokerLoginSuccessActionState extends LoginActionState {}
+final class BrokerLoginFailureState extends LoginActionState {
+  final String message;
+
+  BrokerLoginFailureState({required this.message});
+}
+
+final class BrokerLoginSuccessActionState extends LoginActionState {
+  final BrokerLoginEntity brokerLoginEntity;
+
+  BrokerLoginSuccessActionState({required this.brokerLoginEntity});
+}
 
 final class TenantLoginSuccessActionState extends LoginActionState {}
 

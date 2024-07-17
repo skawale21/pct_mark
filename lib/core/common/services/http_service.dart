@@ -61,7 +61,10 @@ class HttpService {
     if (response.statusCode == 200) {
       return jsonDecode(response.body);
     } else {
-      throw Exception('Failed to load data');
+      var body = jsonDecode(response.body);
+      throw Exception(
+        body['message'] ?? 'Failed to load data',
+      );
     }
   }
 }

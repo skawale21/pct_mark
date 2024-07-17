@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pct_mark/features/auth/domain/entities/broker_login_entity.dart';
 import 'package:pct_mark/features/auth/domain/repository/usecase/broker_login.dart';
 import 'package:pct_mark/features/auth/domain/repository/usecase/tenant_login.dart';
 
@@ -38,8 +39,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         debugPrint(l.message);
         emit(BrokerLoginFailureState(message: l.message));
       },
-      (r) {
-        emit(BrokerLoginSuccessActionState());
+      (brokerLoginEntity) {
+        emit(BrokerLoginSuccessActionState(
+            brokerLoginEntity: brokerLoginEntity));
       },
     );
   }

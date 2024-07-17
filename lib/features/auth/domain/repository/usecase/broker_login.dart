@@ -2,14 +2,16 @@
 import 'package:fpdart/fpdart.dart';
 import 'package:pct_mark/core/error/failures.dart';
 import 'package:pct_mark/core/usecase/usecase.dart';
+import 'package:pct_mark/features/auth/domain/entities/broker_login_entity.dart';
 import 'package:pct_mark/features/auth/domain/repository/auth_repository.dart';
 
-class BrokerLogin implements UseCase<String, BrokerLoginParams> {
+class BrokerLogin implements UseCase<BrokerLoginEntity, BrokerLoginParams> {
   final AuthRepository authRepository;
 
   BrokerLogin(this.authRepository);
   @override
-  Future<Either<Failure, String>> call(BrokerLoginParams params) async {
+  Future<Either<Failure, BrokerLoginEntity>> call(
+      BrokerLoginParams params) async {
     return await authRepository.brokerLogin(
         userName: params.userName, password: params.password);
   }
