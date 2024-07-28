@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pct_mark/core/common/common_functions/shared_prefs.dart';
+import 'package:pct_mark/core/common/definations.dart';
 import 'package:pct_mark/features/auth/domain/entities/broker_login_entity.dart';
 import 'package:pct_mark/features/auth/domain/repository/usecase/broker_login.dart';
 import 'package:pct_mark/features/auth/domain/repository/usecase/tenant_login.dart';
@@ -12,9 +14,11 @@ part 'login_state.dart';
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final BrokerLogin _brokerLogin;
   final TenantLogin _tenantLogin;
-  LoginBloc(
-      {required BrokerLogin brokerLogin, required TenantLogin tenantLogin})
-      : _brokerLogin = brokerLogin,
+
+  LoginBloc({
+    required BrokerLogin brokerLogin,
+    required TenantLogin tenantLogin,
+  })  : _brokerLogin = brokerLogin,
         _tenantLogin = tenantLogin,
         super(LoginInitial()) {
     on<LoginEvent>(loginEvent);
@@ -25,44 +29,45 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     on<TenantForgetPswEvent>(tenantForgetPswEvent);
   }
 
-  FutureOr<void> loginEvent(LoginEvent event, Emitter<LoginState> emit) async {
+  Future<void> loginEvent(LoginEvent event, Emitter<LoginState> emit) async {
     emit(LoginInitial());
   }
 
-  FutureOr<void> brokerLoginEvent(
+  Future<void> brokerLoginEvent(
       BrokerLoginEvent event, Emitter<LoginState> emit) async {
     final user = await _brokerLogin(
         BrokerLoginParams(userName: event.userName, password: event.password));
 
-    user.fold(
+    await user.fold(
       (l) {
         debugPrint(l.message);
         emit(BrokerLoginFailureState(message: l.message));
       },
-      (brokerLoginEntity) {
-        emit(BrokerLoginSuccessActionState(
-            brokerLoginEntity: brokerLoginEntity));
+      (user) async {
+        await saveUserData(userType: UserType.broker, token: user.token);
+
+        emit(BrokerLoginSuccessActionState(brokerLoginEntity: user));
       },
     );
   }
 
-  FutureOr<void> brokerSignUpDirectEvent(
-      BrokerSignUpDirectEvent event, Emitter<LoginState> emit) {
+  Future<void> brokerSignUpDirectEvent(
+      BrokerSignUpDirectEvent event, Emitter<LoginState> emit) async {
     emit(BrokerSignupActionState());
   }
 
-  FutureOr<void> brokerForgetPswEvent(
-      BrokerForgetPswEvent event, Emitter<LoginState> emit) {
+  Future<void> brokerForgetPswEvent(
+      BrokerForgetPswEvent event, Emitter<LoginState> emit) async {
     emit(BrokerForgotPswActionState());
   }
 
-  FutureOr<void> tenantLoginEvent(
-      TenantLoginEvent event, Emitter<LoginState> emit) {
+  Future<void> tenantLoginEvent(
+      TenantLoginEvent event, Emitter<LoginState> emit) async {
     emit(TenantLoginSuccessActionState());
   }
 
-  FutureOr<void> tenantForgetPswEvent(
-      TenantForgetPswEvent event, Emitter<LoginState> emit) {
+  Future<void> tenantForgetPswEvent(
+      TenantForgetPswEvent event, Emitter<LoginState> emit) async {
     emit(TenantForgotPswActionState());
   }
 }

@@ -16,7 +16,7 @@ class BrokerLoginEntity extends Equatable {
   });
 
   @override
-  List<Object?> get props => [success, message, data, token];
+  List<Object> get props => [success, message, data, token];
 }
 
 class BrokerDataEntity extends Equatable {
@@ -45,7 +45,7 @@ class BrokerDataEntity extends Equatable {
   });
 
   @override
-  List<Object?> get props => [
+  List<Object> get props => [
         id,
         name,
         userName,
@@ -55,6 +55,6 @@ class BrokerDataEntity extends Equatable {
         createdAt,
         updatedAt,
         otp,
-        version
+        version,
       ];
 }

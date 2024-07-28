@@ -1,7 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:pct_mark/core/common/common_functions/form_validations.dart';
+import 'package:pct_mark/core/common/resources/app_routes_constant.dart';
 import 'package:pct_mark/core/common/resources/asset_manager.dart';
 import 'package:pct_mark/core/common/resources/color_manager.dart';
 import 'package:pct_mark/core/common/resources/string_manager.dart';
@@ -52,6 +54,7 @@ class _LoginScreenState extends State<LoginScreen>
           switch (state.runtimeType) {
             case const (BrokerLoginSuccessActionState):
               showCustomSnackbar(context, 'BrokerLoginSuccessActionState');
+              context.goNamed(AppRoutes.brokerDashboard);
               break;
             case const (TenantLoginSuccessActionState):
               showCustomSnackbar(context, 'TenantLoginSuccessActionState');

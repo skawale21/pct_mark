@@ -1,11 +1,9 @@
 class AppRoutes {
-  static const baseUrl = "3.6.94.37:3000";
-
-  static const String loginRoute = 'loginScreen';
+  static const String loginRoute = '/login';
 
   //broker routes
-  static const brokerLogin = "/api/broker/login";
+  static const brokerDashboard = '/api/broker/brokerdashboard';
 
   //tenant routes
-  static const tenentLogin = "/api/tenent/login";
+  static const tenantDashboard = '/api/tenant/tenantdashboard';
 }

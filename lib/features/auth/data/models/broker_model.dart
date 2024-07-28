@@ -12,10 +12,10 @@ class BrokerLoginModel extends BrokerLoginEntity {
 
   factory BrokerLoginModel.fromJson(Map<String, dynamic> json) {
     return BrokerLoginModel(
-      success: json['success'],
-      message: json['message'],
-      data: BrokerDataModel.fromJson(json['data']),
-      token: json['token'],
+      success: json['success'] ?? false,
+      message: json['message'] ?? '',
+      data: BrokerDataModel.fromJson(json['data'] ?? {}),
+      token: json['token'] ?? '',
     );
   }
 }
@@ -36,16 +36,16 @@ class BrokerDataModel extends BrokerDataEntity {
 
   factory BrokerDataModel.fromJson(Map<String, dynamic> json) {
     return BrokerDataModel(
-      id: json['_id'],
-      name: json['name'],
-      userName: json['userName'],
-      email: json['email'],
-      mobileNumber: json['mobileNumber'],
-      password: json['password'],
-      createdAt: json['createdAt'],
-      updatedAt: json['updatedAt'],
-      otp: json['otp'],
-      version: json['__v'],
+      id: json['_id'] ?? '',
+      name: json['name'] ?? '',
+      userName: json['userName'] ?? '', // Handle missing userName
+      email: json['email'] ?? '',
+      mobileNumber: json['mobileNumber'] ?? '',
+      password: json['password'] ?? '',
+      createdAt: json['createdAt'] ?? '',
+      updatedAt: json['updatedAt'] ?? '',
+      otp: json['otp'] ?? 0,
+      version: json['__v'] ?? 0,
     );
   }
 }
