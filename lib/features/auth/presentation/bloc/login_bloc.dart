@@ -45,7 +45,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         emit(BrokerLoginFailureState(message: l.message));
       },
       (broker) async {
-        await saveUserData(userType: UserType.broker, token: broker.token);
+        await saveUserData(
+            userType: UserType.broker,
+            token: broker.token,
+            rememberMe: event.rememberMe);
 
         emit(BrokerLoginSuccessActionState(brokerLoginEntity: broker));
       },
@@ -73,7 +76,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         emit(BrokerLoginFailureState(message: l.message));
       },
       (tenant) async {
-        await saveUserData(userType: UserType.broker, token: tenant.token);
+        await saveUserData(
+            userType: UserType.tenant,
+            token: tenant.token,
+            rememberMe: event.rememberMe);
 
         emit(TenantLoginSuccessActionState(tenant: tenant));
       },

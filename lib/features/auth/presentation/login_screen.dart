@@ -58,6 +58,7 @@ class _LoginScreenState extends State<LoginScreen>
               break;
             case const (TenantLoginSuccessActionState):
               showCustomSnackbar(context, 'TenantLoginSuccessActionState');
+              context.goNamed(AppRoutes.tenantDashboard);
 
               break;
             case const (BrokerSignupActionState):
@@ -241,9 +242,9 @@ class _BrokerLoginTabState extends State<BrokerLoginTab> {
             onPressed: () {
               if (_brokerLoginFormfield.currentState!.validate()) {
                 loginBloc.add(BrokerLoginEvent(
-                  password: _brokerPassword.text.trim(),
-                  userName: _brokerUserName.text.trim(),
-                ));
+                    password: _brokerPassword.text.trim(),
+                    userName: _brokerUserName.text.trim(),
+                    rememberMe: rememberMe ?? false));
               }
             },
             text: 'LOG IN',
@@ -358,9 +359,9 @@ class _TenantLoginTabState extends State<TenantLoginTab> {
             onPressed: () {
               if (_tenantLoginFormfield.currentState!.validate()) {
                 loginBloc.add(TenantLoginEvent(
-                  password: _tenantPassword.text.trim(),
-                  userName: _tenantUserName.text.trim(),
-                ));
+                    password: _tenantPassword.text.trim(),
+                    userName: _tenantUserName.text.trim(),
+                    rememberMe: rememberMe ?? false));
                 if (kDebugMode) {
                   print('Form is valid');
                 }

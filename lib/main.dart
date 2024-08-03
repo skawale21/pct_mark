@@ -51,16 +51,17 @@ class MyApp extends StatelessWidget {
     final sharedPreferences = await SharedPreferences.getInstance();
     final userType = sharedPreferences.getString('userType');
     final token = sharedPreferences.getString('token');
+    final rememberMe = sharedPreferences.getBool('rememberMe') ?? false;
 
-    if (userType == null || token == null) {
+    if ((userType == null || token == null) && !rememberMe) {
       return '/login';
     }
 
-    if (userType == 'UserType.broker') {
+    if (userType == 'UserType.broker' && rememberMe) {
       return '/api/broker/brokerdashboard';
     }
 
-    if (userType == 'UserType.tenant') {
+    if (userType == 'UserType.tenant' && rememberMe) {
       return '/api/tenant/tenantdashboard';
     }
 
