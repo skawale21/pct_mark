@@ -2,16 +2,15 @@
 import 'package:fpdart/fpdart.dart';
 import 'package:pct_mark/core/error/failures.dart';
 import 'package:pct_mark/core/usecase/usecase.dart';
-import 'package:pct_mark/features/auth/domain/entities/booked_tenant_entity.dart';
+import 'package:pct_mark/features/auth/domain/entities/tenant_entity.dart';
 import 'package:pct_mark/features/auth/domain/repository/auth_repository.dart';
 
-class TenantLogin implements UseCase<BookedTenentEntity, TenantLoginParams> {
+class TenantLogin implements UseCase<TenantEntity, TenantLoginParams> {
   final AuthRepository authRepository;
 
   TenantLogin(this.authRepository);
   @override
-  Future<Either<Failure, BookedTenentEntity>> call(
-      TenantLoginParams params) async {
+  Future<Either<Failure, TenantEntity>> call(TenantLoginParams params) async {
     return await authRepository.tenantLogin(
         userName: params.userName, password: params.password);
   }

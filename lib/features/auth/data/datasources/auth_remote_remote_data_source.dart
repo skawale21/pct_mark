@@ -3,8 +3,8 @@ import 'package:http/http.dart' as http;
 import 'package:pct_mark/core/common/resources/api_endpoints.dart';
 import 'package:pct_mark/core/common/services/http_service.dart';
 import 'package:pct_mark/core/error/exceptions.dart';
-import 'package:pct_mark/features/auth/data/models/booked_tenant_model.dart';
 import 'package:pct_mark/features/auth/data/models/broker_model.dart';
+import 'package:pct_mark/features/auth/data/models/tenant_model.dart';
 
 abstract interface class AuthRemoteDataSource {
   Future<BrokerLoginModel> brokerLogin({
@@ -12,7 +12,7 @@ abstract interface class AuthRemoteDataSource {
     required String password,
   });
 
-  Future<BookedTenentModel> tenantLogin({
+  Future<TenantModel> tenantLogin({
     required String userName,
     required String password,
   });
@@ -41,7 +41,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   }
 
   @override
-  Future<BookedTenentModel> tenantLogin(
+  Future<TenantModel> tenantLogin(
       {required String userName, required String password}) async {
     try {
       final response = await httpService.post(ApiEndPoints.tenentLogin,
@@ -49,7 +49,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       if (response == null) {
         throw ServerException('User is null');
       }
-      return BookedTenentModel.fromJson(response);
+      return TenantModel.fromJson(response);
     } catch (e) {
       throw ServerException(e.toString());
     }

@@ -3,7 +3,7 @@ import 'package:pct_mark/core/error/exceptions.dart';
 import 'package:pct_mark/core/error/failures.dart';
 import 'package:pct_mark/features/auth/data/datasources/auth_remote_remote_data_source.dart';
 import 'package:pct_mark/features/auth/data/models/broker_model.dart';
-import 'package:pct_mark/features/auth/domain/entities/booked_tenant_entity.dart';
+import 'package:pct_mark/features/auth/domain/entities/tenant_entity.dart';
 import 'package:pct_mark/features/auth/domain/repository/auth_repository.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
@@ -23,7 +23,7 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<Either<Failure, BookedTenentEntity>> tenantLogin(
+  Future<Either<Failure, TenantEntity>> tenantLogin(
       {required String userName, required String password}) {
     // TODO: implement tenantLogin
     throw UnimplementedError();
