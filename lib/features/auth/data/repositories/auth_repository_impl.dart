@@ -24,8 +24,13 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<Either<Failure, TenantEntity>> tenantLogin(
-      {required String userName, required String password}) {
-    // TODO: implement tenantLogin
-    throw UnimplementedError();
+      {required String userName, required String password}) async {
+    try {
+      final user = await remoteDataSource.tenantLogin(
+          userName: userName, password: password);
+      return Right(user);
+    } on ServerException catch (e) {
+      return Left(Failure(e.message));
+    }
   }
 }

@@ -24,7 +24,11 @@ final class BrokerLoginSuccessActionState extends LoginActionState {
   BrokerLoginSuccessActionState({required this.brokerLoginEntity});
 }
 
-final class TenantLoginSuccessActionState extends LoginActionState {}
+final class TenantLoginSuccessActionState extends LoginActionState {
+  final TenantEntity tenant;
+
+  TenantLoginSuccessActionState({required this.tenant});
+}
 
 final class BrokerSignupActionState extends LoginActionState {}
 
