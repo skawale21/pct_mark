@@ -37,5 +37,17 @@ class AppTheme {
         ),
       ),
     ),
+    bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+      // backgroundColor: Colors.teal, // Set the background color to teal
+      selectedItemColor: Colors.black,
+      unselectedItemColor: Colors.grey,
+      showUnselectedLabels: true,
+      selectedLabelStyle: TextStyle(
+        color: Colors.black,
+      ),
+      unselectedLabelStyle: TextStyle(
+        color: Colors.grey,
+      ),
+    ),
   );
 }

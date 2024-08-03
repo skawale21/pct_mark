@@ -3,8 +3,9 @@ import 'package:go_router/go_router.dart';
 import 'package:pct_mark/core/common/resources/app_routes_constant.dart';
 import 'package:pct_mark/core/error/route_error_page.dart';
 import 'package:pct_mark/features/auth/presentation/login_screen.dart';
-import 'package:pct_mark/features/broker_dashboard/presentation/broker_dashboard_screen.dart';
-import 'package:pct_mark/features/tenant_dashboard/presentation/tenant_dashboard_screen.dart';
+import 'package:pct_mark/features/broker_feature/broker_dashboard/presentation/broker_dashboard_screen.dart';
+import 'package:pct_mark/features/tenant_features/tenant_dashboard/presentation/tenant_dashboard_screen.dart';
+import 'package:pct_mark/features/tenant_features/tenant_home_screen.dart';
 
 class AppRoutesConfig {
   final String initialRoute;
@@ -12,7 +13,8 @@ class AppRoutesConfig {
   AppRoutesConfig(this.initialRoute);
 
   late final GoRouter router = GoRouter(
-    initialLocation: initialRoute,
+    // initialLocation: initialRoute,
+    initialLocation: '/api/tenant/tenantHomeScreen',
     routes: [
       GoRoute(
         name: AppRoutes.loginRoute,
@@ -33,6 +35,13 @@ class AppRoutesConfig {
         path: '/api/tenant/tenantdashboard',
         pageBuilder: (context, state) {
           return const MaterialPage(child: TenantDashboardScreen());
+        },
+      ),
+      GoRoute(
+        name: AppRoutes.tenantHomeScreen,
+        path: '/api/tenant/tenantHomeScreen',
+        pageBuilder: (context, state) {
+          return MaterialPage(child: TenantHomeScreen());
         },
       ),
     ],

@@ -16,4 +16,8 @@ class PctStrings {
   static const String SignIn = 'SIGN IN';
 
   static const String appTitle = "Property Care Taker";
+
+  //Tenant Dashboard Strings
+
+  static const String tenantDashboardTitle = 'INFORMATION';
 }

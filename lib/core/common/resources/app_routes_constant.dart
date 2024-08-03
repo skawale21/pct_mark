@@ -6,4 +6,6 @@ class AppRoutes {
 
   //tenant routes
   static const tenantDashboard = '/api/tenant/tenantdashboard';
+
+  static const tenantHomeScreen = '/api/tenant/tenantHomeScreen';
 }

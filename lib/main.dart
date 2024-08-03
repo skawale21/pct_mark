@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pct_mark/core/common/resources/app_routes_config.dart';
+import 'package:pct_mark/core/providers/tenant_bottom_navigation_provider.dart';
 import 'package:pct_mark/core/theme.dart';
 import 'package:pct_mark/features/auth/presentation/bloc/login_bloc.dart';
 import 'package:pct_mark/init_dependencies.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
@@ -15,6 +17,7 @@ void main() async {
         BlocProvider(
           create: (_) => serviceLocator<LoginBloc>(),
         ),
+        ChangeNotifierProvider(create: (_) => TenantBottomNavigationProvider()),
       ],
       child: const MyApp(),
     ),
@@ -62,7 +65,7 @@ class MyApp extends StatelessWidget {
     }
 
     if (userType == 'UserType.tenant' && rememberMe) {
-      return '/api/tenant/tenantdashboard';
+      return '/api/tenant/tenantHomeScreen';
     }
 
     return '/login';
