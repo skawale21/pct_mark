@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pct_mark/core/app_data/tenant_data.dart';
 import 'package:pct_mark/core/common/resources/app_routes_config.dart';
 import 'package:pct_mark/core/providers/tenant_bottom_navigation_provider.dart';
 import 'package:pct_mark/core/theme.dart';
@@ -51,6 +52,13 @@ class MyApp extends StatelessWidget {
   }
 
   Future<String> _getInitialRoute() async {
+    final tenantDataService = serviceLocator<TenantDataService>();
+    final tenant = await tenantDataService.getTenantData();
+
+    if (tenant != null) {
+      return '/api/tenant/tenantHomeScreen'; // Or any route based on tenant data
+    }
+
     final sharedPreferences = await SharedPreferences.getInstance();
     final userType = sharedPreferences.getString('userType');
     final token = sharedPreferences.getString('token');

@@ -11,3 +11,14 @@ Future<void> saveUserData({
   await sharedPreferences.setString('token', token);
   await sharedPreferences.setBool('rememberMe', rememberMe);
 }
+
+//tenant data
+
+// Future<void> saveTenantData({
+//   required String tenantData,
+// }) async {
+//   final sharedPreferences = await SharedPreferences.getInstance();
+
+// //tenant data
+//   await sharedPreferences.setString('tenantData', tenantData);
+// }

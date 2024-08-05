@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pct_mark/core/common/common_functions/shared_prefs.dart';
-import 'package:pct_mark/core/common/definations.dart';
+import 'package:pct_mark/core/app_data/data_model/user_data_model.dart';
+import 'package:pct_mark/features/auth/data/storage_manager.dart';
 import 'package:pct_mark/features/auth/domain/entities/broker_login_entity.dart';
 import 'package:pct_mark/features/auth/domain/entities/tenant_entity.dart';
 import 'package:pct_mark/features/auth/domain/repository/usecase/broker_login.dart';
@@ -45,10 +45,17 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         emit(BrokerLoginFailureState(message: l.message));
       },
       (broker) async {
-        await saveUserData(
-            userType: UserType.broker,
-            token: broker.token,
-            rememberMe: event.rememberMe);
+        // await saveUserData(
+        //     userType: UserType.broker,
+        //     token: broker.token,
+        //     rememberMe: event.rememberMe);
+
+        final userData = UserData(
+          userType: 'broker',
+          token: broker.token,
+          rememberMe: event.rememberMe,
+        );
+        await StorageManager().saveUserData(userData);
 
         emit(BrokerLoginSuccessActionState(brokerLoginEntity: broker));
       },
@@ -76,10 +83,17 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         emit(BrokerLoginFailureState(message: l.message));
       },
       (tenant) async {
-        await saveUserData(
-            userType: UserType.tenant,
-            token: tenant.token,
-            rememberMe: event.rememberMe);
+        // await saveUserData(
+        //     userType: UserType.tenant,
+        //     token: tenant.token,
+        //     rememberMe: event.rememberMe);
+
+        final userData = UserData(
+          userType: 'tenant',
+          token: tenant.token,
+          rememberMe: event.rememberMe,
+        );
+        await StorageManager().saveUserData(userData);
 
         emit(TenantLoginSuccessActionState(tenant: tenant));
       },

@@ -7,6 +7,7 @@ import 'package:pct_mark/core/common/services/http_service.dart';
 import 'package:pct_mark/core/error/exceptions.dart';
 import 'package:pct_mark/features/auth/data/models/broker_model.dart';
 import 'package:pct_mark/features/auth/data/models/tenant_model.dart';
+import 'package:pct_mark/init_dependencies.dart';
 
 abstract interface class AuthRemoteDataSource {
   Future<BrokerLoginModel> brokerLogin({
@@ -25,7 +26,9 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   AuthRemoteDataSourceImpl(
     this.httpService,
   );
+  //remove below code in future
   final client = http.Client();
+  final tenantDataService = serviceLocator<TenantDataService>();
   @override
   Future<BrokerLoginModel> brokerLogin(
       {required String userName, required String password}) async {
@@ -51,7 +54,8 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       if (response == null) {
         throw ServerException('User is null');
       }
-      tenantDataService.saveTenantData(TenantData.fromJson(response));
+      // tenantDataService.saveTenantData(TenantData.fromJson(response));
+      await tenantDataService.saveTenantData(TenantData.fromJson(response));
 
       return TenantModel.fromJson(response);
     } catch (e) {

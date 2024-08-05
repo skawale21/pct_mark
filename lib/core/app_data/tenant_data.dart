@@ -1,20 +1,16 @@
 import 'package:pct_mark/core/app_data/data_model/tenant_data_model.dart';
-import 'package:pct_mark/init_dependencies.dart';
+import 'package:pct_mark/features/auth/data/storage_manager.dart';
 
 class TenantDataService {
-  TenantData? _tenantData;
+  final StorageManager _storageManager;
 
-  void saveTenantData(TenantData tenantData) {
-    _tenantData = tenantData;
+  TenantDataService(this._storageManager);
+
+  Future<void> saveTenantData(TenantData tenantData) async {
+    await _storageManager.saveTenantData(tenantData);
   }
 
-  TenantData? getTenantData() {
-    return _tenantData;
-  }
-
-  void clearTenantData() {
-    _tenantData = null;
+  Future<TenantData?> getTenantData() async {
+    return await _storageManager.getTenantData();
   }
 }
-
-final TenantDataService tenantDataService = serviceLocator<TenantDataService>();
