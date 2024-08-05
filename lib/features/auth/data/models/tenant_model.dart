@@ -4,117 +4,65 @@ class TenantModel extends TenantEntity {
   const TenantModel({
     required super.success,
     required super.message,
-    required TenantDataModel super.data,
+    required super.data,
     required super.token,
   });
 
   factory TenantModel.fromJson(Map<String, dynamic> json) {
     return TenantModel(
-      success: json['success'],
-      message: json['message'],
-      data: TenantDataModel.fromJson(json['data']),
-      token: json['token'],
+      success: json["success"] ?? false,
+      message: json["message"] ?? "",
+      data: json["data"] == null ? null : DataModel.fromJson(json["data"]),
+      token: json["token"] ?? "",
     );
   }
 
-  Map<String, dynamic> toJson() {
-    return {
-      'success': success,
-      'message': message,
-      'data': (data as TenantDataModel).toJson(),
-      'token': token,
-    };
-  }
+  Map<String, dynamic> toJson() => {
+        "success": success,
+        "message": message,
+        "data": data?.toJson(),
+        "token": token,
+      };
 }
 
-class TenantDataModel extends TenantDataEntity {
-  const TenantDataModel({
+class DataModel extends Data {
+  const DataModel({
     required super.flatType,
     required super.flatNumber,
-    required TenantRoomsModel super.rooms,
+    required super.rooms,
     required super.id,
-    required super.name,
+    required super.bookedTenant,
     required super.propertyId,
+    required super.name,
   });
 
-  factory TenantDataModel.fromJson(Map<String, dynamic> json) {
-    return TenantDataModel(
-      flatType: json['flatType'],
-      flatNumber: json['flatNumber'],
-      rooms: TenantRoomsModel.fromJson(json['rooms']),
-      id: json['_id'],
-      name: json['name'],
-      propertyId: json['propertyId'],
+  factory DataModel.fromJson(Map<String, dynamic> json) {
+    return DataModel(
+      flatType: json["flatType"] ?? "",
+      flatNumber: json["flatNumber"] ?? 0,
+      rooms: json["rooms"] == null ? null : RoomsModel.fromJson(json["rooms"]),
+      id: json["_id"] ?? "",
+      bookedTenant: json["bookedTenant"] == null
+          ? null
+          : BookedTenantModel.fromJson(json["bookedTenant"]),
+      propertyId: json["propertyId"] ?? "",
+      name: json["name"] ?? "",
     );
   }
 
-  Map<String, dynamic> toJson() {
-    return {
-      'flatType': flatType,
-      'flatNumber': flatNumber,
-      'rooms': (rooms as TenantRoomsModel).toJson(),
-      '_id': id,
-      'name': name,
-      'propertyId': propertyId,
-    };
-  }
+  @override
+  Map<String, dynamic> toJson() => {
+        "flatType": flatType,
+        "flatNumber": flatNumber,
+        "rooms": rooms?.toJson(),
+        "_id": id,
+        "bookedTenant": bookedTenant?.toJson(),
+        "propertyId": propertyId,
+        "name": name,
+      };
 }
 
-class TenantRoomsModel extends TenantRoomsEntity {
-  const TenantRoomsModel({
-    required super.roomNumber,
-    required TenantBedsModel super.beds,
-    required super.id,
-  });
-
-  factory TenantRoomsModel.fromJson(Map<String, dynamic> json) {
-    return TenantRoomsModel(
-      roomNumber: json['roomNumber'],
-      beds: TenantBedsModel.fromJson(json['beds']),
-      id: json['_id'],
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'roomNumber': roomNumber,
-      'beds': (beds as TenantBedsModel).toJson(),
-      '_id': id,
-    };
-  }
-}
-
-class TenantBedsModel extends TenantBedsEntity {
-  const TenantBedsModel({
-    required super.bedNumber,
-    required super.status,
-    required super.bookedTenantId,
-    super.noticeTenantId,
-    required super.id,
-  });
-
-  factory TenantBedsModel.fromJson(Map<String, dynamic> json) {
-    return TenantBedsModel(
-      bedNumber: json['bedNumber'],
-      status: json['status'],
-      bookedTenantId: json['bookedTenentId'],
-      noticeTenantId: json['noticeTenantId'],
-      id: json['_id'],
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'bedNumber': bedNumber,
-      'status': status,
-      'bookedTenentId': bookedTenantId,
-      'noticeTenantId': noticeTenantId,
-      '_id': id,
-    };
-  }
-}
-
-class BookedTenantModel extends BookedTenantEntity {
+class BookedTenantModel extends BookedTenant {
   const BookedTenantModel({
     required super.id,
     required super.name,
@@ -136,58 +84,80 @@ class BookedTenantModel extends BookedTenantEntity {
     required super.profileImage,
     required super.rentAgreement,
     required super.rentPayDate,
-    required super.securityDeposit,
+    required super.securityDeposite,
   });
 
   factory BookedTenantModel.fromJson(Map<String, dynamic> json) {
     return BookedTenantModel(
-      id: json['_id'],
-      name: json['name'],
-      email: json['email'],
-      mobileNumber: json['mobileNumber'],
-      password: json['password'],
-      address1: json['address1'],
-      address2: json['address2'],
-      createdAt: json['createdAt'],
-      updatedAt: json['updatedAt'],
-      v: json['__v'],
-      aadhaarNumber: json['aadhaarNumber'],
-      addressProof: json['addressProof'],
-      altMobileNumber: json['altMobileNumber'],
-      identityProof: json['identityProof'],
-      joiningDate: json['joiningDate'],
-      leavingDate: json['leavingDate'],
-      monthlyRent: json['monthlyRent'],
-      profileImage: json['profileImage'],
-      rentAgreement: json['rentAgreement'],
-      rentPayDate: json['rentPayDate'],
-      securityDeposit: json['securityDeposite'],
+      id: json["_id"] ?? "",
+      name: json["name"] ?? "",
+      email: json["email"] ?? "",
+      mobileNumber: json["mobileNumber"] ?? "",
+      password: json["password"] ?? "",
+      address1: json["address1"] ?? "",
+      address2: json["address2"] ?? "",
+      createdAt: DateTime.tryParse(json["createdAt"] ?? ""),
+      updatedAt: DateTime.tryParse(json["updatedAt"] ?? ""),
+      v: json["__v"] ?? 0,
+      aadhaarNumber: json["aadhaarNumber"] ?? "",
+      addressProof: json["addressProof"] ?? "",
+      altMobileNumber: json["altMobileNumber"] ?? "",
+      identityProof: json["identityProof"] ?? "",
+      joiningDate: DateTime.tryParse(json["joiningDate"] ?? ""),
+      leavingDate: DateTime.tryParse(json["leavingDate"] ?? ""),
+      monthlyRent: json["monthlyRent"] ?? 0,
+      profileImage: json["profileImage"] ?? "",
+      rentAgreement: json["rentAgreement"] ?? "",
+      rentPayDate: DateTime.tryParse(json["rentPayDate"] ?? ""),
+      securityDeposite: json["securityDeposite"] ?? 0,
     );
   }
 
-  Map<String, dynamic> toJson() {
-    return {
-      '_id': id,
-      'name': name,
-      'email': email,
-      'mobileNumber': mobileNumber,
-      'password': password,
-      'address1': address1,
-      'address2': address2,
-      'createdAt': createdAt,
-      'updatedAt': updatedAt,
-      '__v': v,
-      'aadhaarNumber': aadhaarNumber,
-      'addressProof': addressProof,
-      'altMobileNumber': altMobileNumber,
-      'identityProof': identityProof,
-      'joiningDate': joiningDate,
-      'leavingDate': leavingDate,
-      'monthlyRent': monthlyRent,
-      'profileImage': profileImage,
-      'rentAgreement': rentAgreement,
-      'rentPayDate': rentPayDate,
-      'securityDeposite': securityDeposit,
-    };
+  @override
+  Map<String, dynamic> toJson() => {
+        "_id": id,
+        "name": name,
+        "email": email,
+        "mobileNumber": mobileNumber,
+        "password": password,
+        "address1": address1,
+        "address2": address2,
+        "createdAt": createdAt?.toIso8601String(),
+        "updatedAt": updatedAt?.toIso8601String(),
+        "__v": v,
+        "aadhaarNumber": aadhaarNumber,
+        "addressProof": addressProof,
+        "altMobileNumber": altMobileNumber,
+        "identityProof": identityProof,
+        "joiningDate": joiningDate?.toIso8601String(),
+        "leavingDate": leavingDate?.toIso8601String(),
+        "monthlyRent": monthlyRent,
+        "profileImage": profileImage,
+        "rentAgreement": rentAgreement,
+        "rentPayDate": rentPayDate?.toIso8601String(),
+        "securityDeposite": securityDeposite,
+      };
+}
+
+class RoomsModel extends Rooms {
+  const RoomsModel({
+    required super.totalRooms,
+    required super.vacantRooms,
+    required super.occupiedRooms,
+  });
+
+  factory RoomsModel.fromJson(Map<String, dynamic> json) {
+    return RoomsModel(
+      totalRooms: json["totalRooms"] ?? 0,
+      vacantRooms: json["vacantRooms"] ?? 0,
+      occupiedRooms: json["occupiedRooms"] ?? 0,
+    );
   }
+
+  @override
+  Map<String, dynamic> toJson() => {
+        "totalRooms": totalRooms,
+        "vacantRooms": vacantRooms,
+        "occupiedRooms": occupiedRooms,
+      };
 }

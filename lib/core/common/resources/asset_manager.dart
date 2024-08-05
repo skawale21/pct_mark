@@ -13,4 +13,5 @@ final class PctImages {
   static const String tbottom_info = '$IMAGE_PATH/dash_info.svg';
   static const String tbottom_ledger = '$IMAGE_PATH/dash_ledger.svg';
   static const String tbottomHelp = '$IMAGE_PATH/dash_support.svg';
+  static const String tnotification = '$IMAGE_PATH/dash_notification.svg';
 }

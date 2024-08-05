@@ -13,8 +13,8 @@ class AppRoutesConfig {
   AppRoutesConfig(this.initialRoute);
 
   late final GoRouter router = GoRouter(
-    // initialLocation: initialRoute,
-    initialLocation: '/api/tenant/tenantHomeScreen',
+    initialLocation: initialRoute,
+    // initialLocation: '/api/tenant/tenantHomeScreen',
     routes: [
       GoRoute(
         name: AppRoutes.loginRoute,

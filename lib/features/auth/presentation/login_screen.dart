@@ -58,7 +58,7 @@ class _LoginScreenState extends State<LoginScreen>
               break;
             case const (TenantLoginSuccessActionState):
               showCustomSnackbar(context, 'TenantLoginSuccessActionState');
-              context.goNamed(AppRoutes.tenantDashboard);
+              context.goNamed(AppRoutes.tenantHomeScreen);
 
               break;
             case const (BrokerSignupActionState):

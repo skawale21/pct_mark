@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 class TenantEntity extends Equatable {
   final bool success;
   final String message;
-  final TenantDataEntity data;
+  final Data? data;
   final String token;
 
   const TenantEntity({
@@ -14,66 +14,44 @@ class TenantEntity extends Equatable {
   });
 
   @override
-  List<Object> get props => [success, message, data, token];
+  List<Object?> get props => [success, message, data, token];
 }
 
-class TenantDataEntity extends Equatable {
+class Data extends Equatable {
   final String flatType;
   final int flatNumber;
-  final TenantRoomsEntity rooms;
+  final Rooms? rooms;
   final String id;
-  final String name;
+  final BookedTenant? bookedTenant;
   final String propertyId;
+  final String name;
 
-  const TenantDataEntity({
+  const Data({
     required this.flatType,
     required this.flatNumber,
     required this.rooms,
     required this.id,
-    required this.name,
+    required this.bookedTenant,
     required this.propertyId,
+    required this.name,
   });
 
   @override
-  List<Object> get props => [flatType, flatNumber, rooms, id, name, propertyId];
+  List<Object?> get props =>
+      [flatType, flatNumber, rooms, id, bookedTenant, propertyId, name];
+
+  Map<String, dynamic> toJson() => {
+        "flatType": flatType,
+        "flatNumber": flatNumber,
+        "rooms": rooms?.toJson(),
+        "_id": id,
+        "bookedTenant": bookedTenant?.toJson(),
+        "propertyId": propertyId,
+        "name": name,
+      };
 }
 
-class TenantRoomsEntity extends Equatable {
-  final int roomNumber;
-  final TenantBedsEntity beds;
-  final String id;
-
-  const TenantRoomsEntity({
-    required this.roomNumber,
-    required this.beds,
-    required this.id,
-  });
-
-  @override
-  List<Object> get props => [roomNumber, beds, id];
-}
-
-class TenantBedsEntity extends Equatable {
-  final int bedNumber;
-  final String status;
-  final String bookedTenantId;
-  final String? noticeTenantId;
-  final String id;
-
-  const TenantBedsEntity({
-    required this.bedNumber,
-    required this.status,
-    required this.bookedTenantId,
-    this.noticeTenantId,
-    required this.id,
-  });
-
-  @override
-  List<Object> get props =>
-      [bedNumber, status, bookedTenantId, noticeTenantId ?? '', id];
-}
-
-class BookedTenantEntity extends Equatable {
+class BookedTenant extends Equatable {
   final String id;
   final String name;
   final String email;
@@ -81,22 +59,22 @@ class BookedTenantEntity extends Equatable {
   final String password;
   final String address1;
   final String address2;
-  final String createdAt;
-  final String updatedAt;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
   final int v;
   final String aadhaarNumber;
   final String addressProof;
   final String altMobileNumber;
   final String identityProof;
-  final String joiningDate;
-  final String leavingDate;
+  final DateTime? joiningDate;
+  final DateTime? leavingDate;
   final int monthlyRent;
   final String profileImage;
   final String rentAgreement;
-  final String rentPayDate;
-  final int securityDeposit;
+  final DateTime? rentPayDate;
+  final int securityDeposite;
 
-  const BookedTenantEntity({
+  const BookedTenant({
     required this.id,
     required this.name,
     required this.email,
@@ -117,11 +95,11 @@ class BookedTenantEntity extends Equatable {
     required this.profileImage,
     required this.rentAgreement,
     required this.rentPayDate,
-    required this.securityDeposit,
+    required this.securityDeposite,
   });
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         id,
         name,
         email,
@@ -142,6 +120,51 @@ class BookedTenantEntity extends Equatable {
         profileImage,
         rentAgreement,
         rentPayDate,
-        securityDeposit,
+        securityDeposite,
       ];
+
+  Map<String, dynamic> toJson() => {
+        "_id": id,
+        "name": name,
+        "email": email,
+        "mobileNumber": mobileNumber,
+        "password": password,
+        "address1": address1,
+        "address2": address2,
+        "createdAt": createdAt?.toIso8601String(),
+        "updatedAt": updatedAt?.toIso8601String(),
+        "__v": v,
+        "aadhaarNumber": aadhaarNumber,
+        "addressProof": addressProof,
+        "altMobileNumber": altMobileNumber,
+        "identityProof": identityProof,
+        "joiningDate": joiningDate?.toIso8601String(),
+        "leavingDate": leavingDate?.toIso8601String(),
+        "monthlyRent": monthlyRent,
+        "profileImage": profileImage,
+        "rentAgreement": rentAgreement,
+        "rentPayDate": rentPayDate?.toIso8601String(),
+        "securityDeposite": securityDeposite,
+      };
+}
+
+class Rooms extends Equatable {
+  final int totalRooms;
+  final int vacantRooms;
+  final int occupiedRooms;
+
+  const Rooms({
+    required this.totalRooms,
+    required this.vacantRooms,
+    required this.occupiedRooms,
+  });
+
+  @override
+  List<Object?> get props => [totalRooms, vacantRooms, occupiedRooms];
+
+  Map<String, dynamic> toJson() => {
+        "totalRooms": totalRooms,
+        "vacantRooms": vacantRooms,
+        "occupiedRooms": occupiedRooms,
+      };
 }

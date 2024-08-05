@@ -1,5 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:http/http.dart' as http;
+import 'package:pct_mark/core/app_data/data_model/tenant_data_model.dart';
+import 'package:pct_mark/core/app_data/tenant_data.dart';
 import 'package:pct_mark/core/common/resources/api_endpoints.dart';
 import 'package:pct_mark/core/common/services/http_service.dart';
 import 'package:pct_mark/core/error/exceptions.dart';
@@ -49,6 +51,8 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       if (response == null) {
         throw ServerException('User is null');
       }
+      tenantDataService.saveTenantData(TenantData.fromJson(response));
+
       return TenantModel.fromJson(response);
     } catch (e) {
       throw ServerException(e.toString());

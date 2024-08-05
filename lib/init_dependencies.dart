@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:pct_mark/core/app_data/tenant_data.dart';
 import 'package:pct_mark/core/common/resources/api_endpoints.dart';
 import 'package:pct_mark/core/common/services/http_service.dart';
 import 'package:pct_mark/features/auth/data/datasources/auth_remote_remote_data_source.dart';
@@ -18,6 +19,9 @@ Future<void> initDependencies() async {
   serviceLocator.registerLazySingleton(() => httpService);
   final sharedPreferences = await SharedPreferences.getInstance();
   serviceLocator.registerLazySingleton(() => sharedPreferences);
+
+//tenant data
+  serviceLocator.registerLazySingleton(() => TenantDataService());
 }
 
 void _initAuth() {
@@ -37,7 +41,6 @@ void _initAuth() {
         LoginBloc(brokerLogin: serviceLocator(), tenantLogin: serviceLocator()),
   );
 }
-
 
 /*
 
