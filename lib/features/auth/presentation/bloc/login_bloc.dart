@@ -3,11 +3,13 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pct_mark/core/app_data/data_model/user_data_model.dart';
+import 'package:pct_mark/core/common/services/http_service.dart';
 import 'package:pct_mark/features/auth/data/storage_manager.dart';
 import 'package:pct_mark/features/auth/domain/entities/broker_login_entity.dart';
 import 'package:pct_mark/features/auth/domain/entities/tenant_entity.dart';
 import 'package:pct_mark/features/auth/domain/repository/usecase/broker_login.dart';
 import 'package:pct_mark/features/auth/domain/repository/usecase/tenant_login.dart';
+import 'package:pct_mark/init_dependencies.dart';
 
 part 'login_event.dart';
 part 'login_state.dart';
@@ -56,6 +58,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           rememberMe: event.rememberMe,
         );
         await StorageManager().saveUserData(userData);
+        final httpService = serviceLocator<HttpService>();
+        httpService.setToken(broker.token);
 
         emit(BrokerLoginSuccessActionState(brokerLoginEntity: broker));
       },
@@ -93,7 +97,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           token: tenant.token,
           rememberMe: event.rememberMe,
         );
+
         await StorageManager().saveUserData(userData);
+        final httpService = serviceLocator<HttpService>();
+        httpService.setToken(tenant.token);
 
         emit(TenantLoginSuccessActionState(tenant: tenant));
       },

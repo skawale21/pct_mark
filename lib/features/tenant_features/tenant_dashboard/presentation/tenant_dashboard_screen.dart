@@ -20,7 +20,7 @@ class _TenantDashboardScreenState extends State<TenantDashboardScreen> {
           actions: [
             IconButton(
                 onPressed: () {
-                  context.pushNamed(AppRoutes.brokerDashboard);
+                  context.pushNamed(AppRoutes.tenantNotifications);
                 },
                 icon: const Icon(
                   Icons.notifications,

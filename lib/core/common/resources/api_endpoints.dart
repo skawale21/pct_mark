@@ -56,4 +56,7 @@ class ApiEndPoints {
 
   static const brokerFetchTenantsByPropType = '/api/broker/fetch-tenents';
   static const brokerFetchTenantPropById = '/api/broker/fetch-tenent-property';
+
+  //tenant end points
+  static const tenantNewComplaint = '/api/tenent/add-complaint';
 }

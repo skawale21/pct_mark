@@ -47,7 +47,7 @@ class _InformationScreenState extends State<InformationScreen> {
           actions: [
             IconButton(
               onPressed: () {
-                context.pushNamed(AppRoutes.brokerDashboard);
+                context.pushNamed(AppRoutes.tenantNotifications);
               },
               icon: SvgPicture.asset(PctImages.tnotification),
             )

@@ -9,4 +9,7 @@ class PctTextStyle {
     color: Color(0xff000000),
     height: 24.970624923706055 / 18,
   );
+
+  TextStyle buttonTextStyle = const TextStyle(
+      fontSize: 14, fontWeight: FontWeight.w700, color: Colors.white);
 }

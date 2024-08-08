@@ -8,4 +8,5 @@ class AppRoutes {
   static const tenantDashboard = '/api/tenant/tenantdashboard';
 
   static const tenantHomeScreen = '/api/tenant/tenantHomeScreen';
+  static const tenantNotifications = '/api/tenant/tenantNotifications';
 }

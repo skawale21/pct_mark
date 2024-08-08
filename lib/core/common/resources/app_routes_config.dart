@@ -6,6 +6,7 @@ import 'package:pct_mark/features/auth/presentation/login_screen.dart';
 import 'package:pct_mark/features/broker_feature/broker_dashboard/presentation/broker_dashboard_screen.dart';
 import 'package:pct_mark/features/tenant_features/tenant_dashboard/presentation/tenant_dashboard_screen.dart';
 import 'package:pct_mark/features/tenant_features/tenant_home_screen.dart';
+import 'package:pct_mark/features/tenant_features/tenant_notification/presentation/tenant_notification.dart';
 
 class AppRoutesConfig {
   final String initialRoute;
@@ -42,6 +43,15 @@ class AppRoutesConfig {
         path: '/api/tenant/tenantHomeScreen',
         pageBuilder: (context, state) {
           return MaterialPage(child: TenantHomeScreen());
+        },
+      ),
+      GoRoute(
+        name: AppRoutes.tenantNotifications,
+        path: '/api/tenant/tenantNotifications',
+        pageBuilder: (context, state) {
+          return const MaterialPage(
+            child: TenantNotifications(),
+          );
         },
       ),
     ],

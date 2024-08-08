@@ -12,10 +12,17 @@ class HttpService {
     token = newToken;
   }
 
+  // Map<String, String> _getHeaders() {
+  //   return {
+  //     'Content-Type': 'application/json',
+  //     if (token != null) 'Authorization': 'Bearer $token',
+  //   };
+  // }
+
   Map<String, String> _getHeaders() {
     return {
       'Content-Type': 'application/json',
-      if (token != null) 'Authorization': 'Bearer $token',
+      if (token != null) 'token': '$token',
     };
   }
 
@@ -68,6 +75,7 @@ class HttpService {
     }
   }
 }
+
 
 /*class UserRepository {
   final HttpService httpService;
